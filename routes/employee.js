@@ -165,8 +165,10 @@ router.get('/getfollowups', async (req, res) => {
     let now = new Date();
     console.log(email)
     let end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
-    now.setHours(0, 0, 0, 0);
-    end.setHours(23,59,59, 59)
+    end.setHours(0, 0, 0, 0);
+    now.setHours(23,59,59, 59)
+    console.log(now)
+    console.log(end)
     if(!email) return res.status(400).json({ status: "error", error: "missing data" })
     try{
         const followups = await Followup.find({
