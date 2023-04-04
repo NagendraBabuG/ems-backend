@@ -11,7 +11,7 @@ const followupSchema = new Schema({
     },
 
     email: {
-        type: String, unique: true, required: true
+        type: String, required: true
     },
     adminId: {
         type:mongoose.Schema.Types.ObjectId

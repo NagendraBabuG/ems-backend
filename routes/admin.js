@@ -251,11 +251,12 @@ router.post('/addFollowups', async(req, res)=> {
             adminId : findAdmin._id,
             eemail : eemail
         })   
-        console.log(followupObject)
+        console.log('followups ',followupObject)
 
         return res.status(200).json({status:'success', data: followupObject})
     }
-    catch{
+    catch(error){
+        console.log(error)
         return res.status(400).json({status: 'error', error: 'error wrong'})
     }
 
