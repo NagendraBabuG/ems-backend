@@ -6,7 +6,7 @@ const admin = require('../config/firebase-config')
 const Task = require('../models/tasks')
 const middleware = require('../middleware/index')
 const moment = require('moment')
-const { query } = require("express")
+const Followup = require('../models/followup')
 
 const router = express.Router()
 
@@ -160,5 +160,26 @@ router.get('/getTaskRange', async (req, res) => {
     }
 })
 
+router.get('/getfollowups', async (req, res) => {
+    const email = req.query.email
+    let now = new Date();
+    console.log(email)
+    let end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2);
+    now.setHours(0, 0, 0, 0);
+    end.setHours(23,59,59, 59)
+    if(!email) return res.status(400).json({ status: "error", error: "missing data" })
+    try{
+        const followups = await Followup.find({
+            createdAt: { $gte: end, $lte: now },
+                eemail: email
+        })
+        console.log('followups ',followups)
+        if (!followups) res.status(400).json({ status: 'failed', data: "tasks not found" })
+        return res.status(200).json({ status: "success", data: followups })
+    }
+    catch (error){
+        res.status(400).json({ status: "error", error: error })
+    }
+})
 
 module.exports = router

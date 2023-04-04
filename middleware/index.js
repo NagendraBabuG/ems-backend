@@ -28,7 +28,7 @@ const decodeToken = async (req, res, next) => {
 		const decodeValue = await admin.auth().verifyIdToken(token);
 			//console.log(decodeValue, "decoded value")
 			if (decodeValue) {
-                console.log(decodeValue);
+                console.log(decodeValue, "decoded value");
 				return next();
 			}
 			return res.json({ message: 'Unauthorized' });
